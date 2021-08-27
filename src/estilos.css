@@ -1,0 +1,433 @@
+*{
+    margin:0;
+    padding: 0;
+}
+.contenedor{
+    margin: 20px;
+    display: flex;
+    gap:10px;
+    padding: 5px;
+    background-color: darkgray;
+    border-radius: 5px;
+    width: fit-content;
+}
+header{
+    width: 100vw;
+    background-color: darkorchid;
+    display: flex;
+    align-items: center;
+    border-bottom: 7px solid rgba(108, 233, 255, 0.933);
+}
+.headerLogoImg{
+    object-fit: contain;
+    height: 100px;
+}
+.headerContenedorLink{
+    height: 100%;
+    display: flex;
+    margin: 0 auto;
+}
+.headerLink a{
+    cursor: pointer;
+    padding: 40px 24px;
+    text-decoration: none;
+    transition:0.5s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    border-right: solid 1px white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+.headerLink a:hover,.headerContenedorSpan:hover a , a.navLinkActivo{
+    background-color: violet;
+    text-decoration: underline ;
+    color: yellow;
+    box-shadow: inset 0 0 10px 0px #a26666;
+}
+.headerContenedorSpan a{
+    padding: 39px;
+    color: white;    
+    display: block;
+    text-decoration: none;
+}
+
+.NavBarSpan{
+    cursor: pointer;
+    transition: 0.5s;
+    font-size: 20px;
+}
+.spanItemCarrito{
+    background: #9dff00;
+    padding: 1px 4px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: bolder;
+    color: black;
+}
+
+.NavBarSpan:hover, .navLinkActivo .NavBarSpan, .headerContenedorSpan:hover .NavBarSpan{
+    color: yellow;
+    text-shadow: 0 0 10px black;
+}
+
+/*TARJETA ITEM*/
+.contenedorItems{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-top: 20px;
+}
+.contenedorItem{
+    box-sizing: content-box;
+    width: 400px;
+    margin: 10px;
+    background-color: #fffaca;
+    font-family: system-ui;
+    box-shadow: 0 0 5px 5px #c3b5b5;
+    border-radius: 15px;
+}
+.contendorImgItem{
+    overflow: hidden;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 10px;
+    background: white;
+    border-radius: 15px;
+
+}
+.ItemImg{
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.Item{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
+    background-color: cornflowerblue;
+}
+.contenedorNumero{
+    box-sizing: border-box;
+    margin: 20px auto;
+    width: 40%;
+    display: flex;
+    background-color: white;
+    box-shadow: 0 0 0px 2px #91b2ef;
+}
+.contendorSpan{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: fit-content;
+    padding: 2px 5px;
+}
+.numeroItem,.ItemPrecio{
+    font-size: 30px;
+    font-family: system-ui;
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+}
+.spanStock{
+    color: #91b2ef;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.spanStock:hover{
+    color: #48f54f;
+    text-shadow: 0 0 4px #48f54f;
+}
+.spanStock.IconoAS-chevron-up{
+    margin-bottom: 2px;
+}
+.numeroStock, .ItemStock{
+    text-align: center;
+    color: grey;
+    margin-bottom: 10px;
+}
+.botonCarrito{
+    width: 80%;
+    margin: 10px auto;
+    display: block;
+    font-size: 22px;
+    background: beige;
+    cursor: pointer;
+}
+.ItemBtn a, .ItemDetalleBtn{
+    display: block;
+    text-decoration: none;
+    margin: 10px auto;
+    padding: 10px 18px;
+    background-color: salmon;
+    border: 1px solid salmon;
+    color: white;
+    font-family: system-ui;
+    font-size: 12px;
+    width: fit-content;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: 0.5s;
+    font-weight: 800;
+
+}
+.ItemBtn:hover a, .ItemDetalleBtn:hover{
+    color: salmon;
+    background-color: white;
+
+}
+
+/*CATEGORIAS*/
+
+.listadoCategorias{
+    display: flex;
+    flex-direction:row;
+    width: 100%;
+    background-color: #3e71d1;
+    justify-content: center;
+}
+.btnCategoria a{
+    background-color: #91b2ef;
+    padding: 10px;
+    border: 2px solid #3e71d1;
+    border-right-width: 1px ;
+    border-left-width: 1px ;
+    cursor: pointer;
+    color: #fff;
+    font-family: sans-serif;
+    transition: 0.3s;
+    display: block;
+    text-decoration: none;
+}
+.btnCategoria:hover a, a.categoriaActiva{
+    background-color: transparent;
+    color:#91ecef;
+    font-weight: 600;
+}
+
+#cargandoCategorias{
+    display: none;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+/*ITEM DETALLE*/
+.mainItemDetalle{
+    display: none;
+}
+.contenedorItemDetalle{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(160, 148, 148);
+    min-height: calc(100vh - 108px);
+}
+.ItemDetalleBtnCerrar{
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: 0.5s;
+    color: rgb(221, 41, 71);
+}
+.ItemDetalleBtnCerrar:hover{
+    color: white;
+    text-shadow: 0 0 10px black;
+}
+.contendorImgItemDetalle{
+    margin: 10px;
+    width: 400px;
+    height: 400px;
+    position:relative;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 0 10px 6px #697356;
+}
+.ItemDetalleImg{
+    width: 400px;
+    height: auto;
+    min-height: 100%;
+}
+.contendorInfoItemDetalle{
+    width: 60%;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+.ItemDetalle{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    color: #941f1f;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.ItemDetallePrecio,.ItemDetalleInfo,.ItemDetalleStock{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.ItemDetallePrecio, .ItemDetalleStock{
+    color: #454661;
+    margin-bottom: 10px;
+}
+.ItemDetalleInfo{
+    font-size: 20px;
+    color: #a94a40;
+    margin-bottom: 15px;
+}
+.ItemDetalleContenedorBtn{
+    display: flex;
+    justify-content: center;
+}
+.ItemDetalleBtn--Volver{
+    background-color: rgb(221, 41, 71);
+    border-color: rgb(221, 41, 71);
+    margin: 10px;
+}
+.ItemDetalleBtn--Volver:hover{
+    color: rgb(221, 41, 71);
+}
+.ItemDetalleBtn--agregar{
+    background-color: seagreen;
+    border-color: seagreen;
+    margin: 10px auto;
+}
+.ItemDetalleBtn--agregar:hover{
+    color: seagreen;
+}
+.navLinkContador {
+    text-decoration: none;
+}
+/*CARRITO*/
+.tituloCarrito{
+    color:#454661;
+    text-decoration: underline;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 30px;
+    padding: 20px 40px;
+}
+.textoCarrito{
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+/*TARJETAS CARRITO*/
+
+.contenedorItemCarrito{
+    display: flex;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 0 7px 5px rgba(136, 95, 95, 0.65);
+}
+.contendorItemCarritoInformacion{
+    width: calc(100%-140px);
+}
+.contendorImgItemCarrito{
+    width: 130px; 
+    margin: 10px
+}
+.ItemCarritoImg{
+    width: 100%;
+    height: 100%;
+}
+.contendorItemCarritoTexto{
+    margin: 13px;
+}
+.contendorItemCarritoTexto p{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.ItemCarrito{
+    color:#18776a;
+    font-weight: 600;
+    font-size: 18px;
+}
+.ItemCarritoCategoria{
+    font-size: 14px;
+    color:#5ac5b7;
+}
+.ItemCarritoPrecio{
+    margin-top: 30px;
+    width: fit-content;
+    display: inline-block;
+    color:#143ec7
+}
+.ItemCarritoPrecio-Total{
+    margin-left: 40px;
+    font-weight: 600;
+}
+.ItemCarritoCantidad{
+    font-size: 15px;
+    color: #c3b5b5;
+}
+.contenedorItemCarritoEditores{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px
+}
+.itemCarritoEditor{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/*LOADING*/
+.contenedorCargando{
+    min-height: calc(100vh - 149px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.imgCargando{
+    width: 200px;
+    height: auto;
+    animation: spin 1.6s linear infinite;
+}
+.textoCargando{
+    font-size: 25px;
+    margin-top: 30px;
+    font-family: system-ui;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*CART HOVER*/
+
+.contenedorCartHover{
+    position: fixed;
+    left: 55%;
+    background-color: white;
+}
+.cartHoverItem{
+    display: flex;
+    border-bottom: 1px solid gray;
+}
+.cartHoverContenedorImg{
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    display: flex;
+}
+.cartHoverImg{
+    width: auto;
+    height: auto;
+}
+.cartHoverContenedorProducto{
+    margin: 5px;
+    max-width: 300px;
+}
+.cartHoverProducto{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 15px;
+    color: #941f1f;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
