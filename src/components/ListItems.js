@@ -2,17 +2,19 @@ import React, {useEffect,useState} from "react";
 import Loading from './Loading';
 import '../estilos.css';
 import Item from './Item';
-import ItemDetail from './ItemDetail';
+// import ItemDetail from './ItemDetail';
 import {productos} from '../assets/arrays';
 import { NavLink} from 'react-router-dom';
+import { getFirestore } from '../firebase';
 
-let arrayProducto = [];
+
+// let arrayProducto = [];
 
 
 const ListItems = () => {
     
     const [array, setArray] = useState(productos);
-    const [productoInfo, setProductoInfo] = useState(arrayProducto);
+    // const [productoInfo, setProductoInfo] = useState(arrayProducto);
 
 
     
@@ -37,37 +39,37 @@ const ListItems = () => {
     }
 
     
-    const abrirDetalleProducto = (id) =>{
-        arrayProducto = [];
-        arrayProducto.push(productos[`${id-1}`]);
-        let contenedorItems=document.querySelector('.contenedorItems');
-        console.log(contenedorItems);
-        contenedorItems.style.display='none';
-        setLoading(true);
-        const arrayVacio = [];       
-        const promesa = ()=>
-        new Promise ((resolve)=>{
-            setProductoInfo(arrayVacio);
-            setTimeout(()=>{
-                resolve(arrayProducto);
-            }, 3000);
-        })
-        promesa().then((result)=>{
-            // let contenedorItemDetalle=document.querySelector('.mainItemDetalle');
-            // contenedorItemDetalle.style.display='block';
+    // const abrirDetalleProducto = (id) =>{
+    //     arrayProducto = [];
+    //     arrayProducto.push(productos[`${id-1}`]);
+    //     let contenedorItems=document.querySelector('.contenedorItems');
+    //     console.log(contenedorItems);
+    //     contenedorItems.style.display='none';
+    //     setLoading(true);
+    //     const arrayVacio = [];       
+    //     const promesa = ()=>
+    //     new Promise ((resolve)=>{
+    //         setProductoInfo(arrayVacio);
+    //         setTimeout(()=>{
+    //             resolve(arrayProducto);
+    //         }, 3000);
+    //     })
+    //     promesa().then((result)=>{
+    //         // let contenedorItemDetalle=document.querySelector('.mainItemDetalle');
+    //         // contenedorItemDetalle.style.display='block';
 
-            setProductoInfo(result)
-        })
-    }
-    const cerrarItem = () => {
-        // let contenedorItemDetalle=document.querySelector('.mainItemDetalle');
-        let contenedorItems=document.querySelector('.contenedorItems');
-        // contenedorItemDetalle.style.display='none';
-        setLoading(true);
-        setTimeout(()=>{
-            contenedorItems.style.display='flex';
-        }, 2000);
-    }
+    //         setProductoInfo(result)
+    //     })
+    // }
+    // const cerrarItem = () => {
+    //     // let contenedorItemDetalle=document.querySelector('.mainItemDetalle');
+    //     let contenedorItems=document.querySelector('.contenedorItems');
+    //     // contenedorItemDetalle.style.display='none';
+    //     setLoading(true);
+    //     setTimeout(()=>{
+    //         contenedorItems.style.display='flex';
+    //     }, 2000);
+    // }
     const filtrarArray = (category) => {
         let arrayFiltrado = productos.filter(producto => producto.categoria === category);
         return arrayFiltrado;
@@ -85,6 +87,48 @@ const ListItems = () => {
     //     },3000)
     // }
      
+    //FIREBASE
+
+    const [item, setItem] = useState([]);
+
+    useEffect(() => {
+        const db = getFirestore();
+        const itemCollection = db.collection("items");
+        // const currentItem = itemCollection.doc(id);
+
+        itemCollection.doc().get()
+            // .then((document) => {
+            //     if (!document.exists){
+            //         console.log('No items');
+            //         return;
+            //     }
+            //     setItem({id: document.id,...document.data()})
+            // });
+        // getFirestore().collection("items")
+                    // .onSnapshot(snap => {
+                    //     const documents = [];
+                    //     snap.forEach( doc =>{
+                    //         documents.push({id:doc.id,...doc.data()})
+                    //     });
+                    //     setItems(documents);
+                    // })
+                    .then((data) => {
+                        const documents = [];
+                        const nuevosItems = data.docs.map((doc)=> (
+                            documents.push({ id: doc.id, ...doc.data()})
+                            ));
+                        setItem(nuevosItems);
+                    });
+                    // .then((querySnapshot)=>{
+                    //     querySnapshot.forEach((doc) =>{
+                    //         console.log(doc.id,':',doc.data())
+                    //     })
+                    // })
+                }, [])
+    console.log('items: ',item);
+
+
+
     return (
         <div className="contenedorCategorias" key='contenedorCategorias'>
             <div className="listadoCategorias">

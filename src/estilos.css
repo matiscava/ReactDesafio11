@@ -405,6 +405,7 @@ header{
     position: fixed;
     left: 55%;
     background-color: white;
+    box-shadow: 0 0 10px black;
 }
 .cartHoverItem{
     display: flex;
