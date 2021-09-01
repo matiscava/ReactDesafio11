@@ -416,9 +416,11 @@ header{
     height: 60px;
     margin: 5px;
     display: flex;
+    justify-content: center;
+    overflow: hidden;
 }
 .cartHoverImg{
-    width: auto;
+    width: 100%;
     height: auto;
 }
 .cartHoverContenedorProducto{

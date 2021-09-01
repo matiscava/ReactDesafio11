@@ -1,14 +1,14 @@
 import React,{useContext} from 'react';
 import { CartContext } from '../context/cartContext';
 
-const ItemCarrito = ({img,alt,nombre,precio,cantidad,id,categoria})=>{
+const ItemCarrito = ({img,alt,nombre,precio,cantidad,id,categoria, key})=>{
     const [cart, setCart] = useContext(CartContext);
     const borrarItem = (id) =>{
         const arrayNuevo = cart.filter((producto) => producto.id !== id);
         setCart(arrayNuevo);
     }
     return (
-        <div className='contenedorItemCarrito' id={'tarjetaItemCarrito-'+id} key={'tarjetaItemCarrito-'+id}>
+        <div className='contenedorItemCarrito' id={'tarjetaItemCarrito-'+id} key={key}>
             <div className='contendorImgItemCarrito'>
                 <img className='ItemCarritoImg' src={img} alt={alt} />
             </div>

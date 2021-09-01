@@ -8,12 +8,12 @@ import 'firebase/compat/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC8ZsnxxSl-FSagTkpLUpKYP46M99-cSoo",
-  authDomain: "proyectofinalreact-7b279.firebaseapp.com",
-  projectId: "proyectofinalreact-7b279",
-  storageBucket: "proyectofinalreact-7b279.appspot.com",
-  messagingSenderId: "815725477940",
-  appId: "1:815725477940:web:33e43bfe99909d40324a61"
+  apiKey: "AIzaSyBjxk9OeDPKoAypEDFwFLNdoMuTWKk5p1w",
+  authDomain: "coderhouse-clase12-cadf1.firebaseapp.com",
+  projectId: "coderhouse-clase12-cadf1",
+  storageBucket: "coderhouse-clase12-cadf1.appspot.com",
+  messagingSenderId: "452335896168",
+  appId: "1:452335896168:web:efbe9d3cc8420bc8d7dddd"
 };
 
 // Initialize Firebase

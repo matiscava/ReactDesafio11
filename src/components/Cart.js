@@ -49,6 +49,7 @@ const Cart = () => {
                         precio={producto.precio}
                         cantidad={producto.cantidad}
                         id={producto.id}
+                        key={producto.id}
                         categoria={producto.categoria}
                     />
                 ))

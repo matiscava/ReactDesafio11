@@ -8,7 +8,7 @@ import HoverCart from './HoverCart';
 
 
 const CartWidget = () => { 
-    let navBarSpan = document.querySelector('.headerContenedorSpan');
+    // let navBarSpan = document.querySelector('.headerContenedorSpan');
     const [hoverProp, setHoverProp] = useState(false)
 
     const cambiarHover = (boolean) => {
@@ -27,7 +27,7 @@ const CartWidget = () => {
                     <span className='NavBarSpan IconoSocial-shopping-cart'></span>
                     {cart.length !== 0 && <span className='spanItemCarrito'>{cantidadCarrito}</span>} 
                 </NavLink>
-                <HoverCart hoverProp={hoverProp} />
+                <HoverCart hoverProp={hoverProp} key='itemCarritoHover'/>
             </div> 
         </>
     )

@@ -1,7 +1,9 @@
 import React,{useState, useContext} from "react";
-import {productos} from '../assets/arrays';
+// import {productos} from '../assets/arrays';
 import {Link} from 'react-router-dom';
 import { CartContext } from "../context/cartContext";
+import { useData } from '../hooks/useData';
+
 
 let ArrayCarrito = [];
 let carritoCargado = localStorage.getItem('productosCarrito');
@@ -12,13 +14,18 @@ let apretado=false;
 
 
 
-const ItemCount = ({id}) => {
+const ItemCount = ({id,stock}) => {
        
-    let productoContado = productos.find( producto => producto.id === id);
+    // let productoContado = productos.find( producto => producto.id === id);
     
+    const firebaseArray = useData('items');
+    const arrayItems = firebaseArray.item;
+
+    const itemElegido = arrayItems.find(producto => producto.id === id);
+    console.log(itemElegido);
 
     const [numero, setNumero] = useState(1);
-    const [nuevoStock,setNuevoStock]= useState(productoContado.stock);
+    const [nuevoStock,setNuevoStock]= useState(stock);
 
     const sumarUno = () =>{
             if(numero<nuevoStock){
@@ -59,15 +66,15 @@ const ItemCount = ({id}) => {
     const addToCart = (contador)=>{
         const item = {
             id: id,
-            nombre: productoContado.nombre,
-            precio: productoContado.precio,
-            imgURL: productoContado.imgURL,
-            alt: productoContado.alt,
-            informacion: productoContado.informacion,
+            nombre: itemElegido.nombre,
+            precio: itemElegido.precio,
+            imgURL: itemElegido.imgURL,
+            alt: itemElegido.alt,
+            informacion: itemElegido.informacion,
             cantidad: contador,
-            categoria: productoContado.categoria,
-            marca: productoContado.marca,
-            modelo: productoContado.modelo
+            categoria: itemElegido.categoria,
+            marca: itemElegido.marca,
+            modelo: itemElegido.modelo
         }
         setCart(carrito => [...carrito, item]);
     }
