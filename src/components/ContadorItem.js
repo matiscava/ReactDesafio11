@@ -74,7 +74,8 @@ const ItemCount = ({id,stock}) => {
             cantidad: contador,
             categoria: itemElegido.categoria,
             marca: itemElegido.marca,
-            modelo: itemElegido.modelo
+            modelo: itemElegido.modelo,
+            stock: itemElegido.stock
         }
         setCart(carrito => [...carrito, item]);
     }

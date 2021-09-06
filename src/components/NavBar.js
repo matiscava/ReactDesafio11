@@ -14,12 +14,15 @@ const NavBar = () =>{
                 <NavLink exact activeClassName='navLinkActivo' to={'/'}>HOME</NavLink>
             </div>
             <div className='headerLink'>
-            <NavLink activeClassName='navLinkActivo' to={'/categorias/'}>CATEGORIAS</NavLink>
+            <NavLink activeClassName='navLinkActivo' to={'/categorias/all'}>CATEGORIAS</NavLink>
             </div>
             <div className='headerLink'>
                 <NavLink activeClassName='navLinkActivo' to={'/contacto'}>CONTACTO</NavLink>
             </div>
             <CartWidget />
+            <div className='headerLink  headerUser'>
+                <NavLink activeClassName='navLinkActivo' to={'/user'}>LOGIN</NavLink>
+            </div>
         </div>
     </header>);
 }
