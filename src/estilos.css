@@ -451,3 +451,18 @@ header{
     color: red;
     font-size: 12px;
 }
+.textAlert,#textoMail{
+    color: red;
+    display: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.inputError{
+    border: 1px solid red;
+    background-color: rgba(255, 158, 158, 0.541);
+    color: -internal-light-dark(red, white);
+}
+.inputError:focus-visible{
+    outline-color: red;
+    outline-width: 2px;
+}

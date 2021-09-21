@@ -4,13 +4,16 @@ import Loading from './Loading';
 import { CartContext } from "../context/cartContext";
 import {Link} from 'react-router-dom';
 import NumberFormat from 'react-number-format';
-import { getFirestore } from '../firebase';
+import db from '../firebase';
+import { collection , addDoc } from "firebase/firestore";
+
 
 const Cart = () => {
     const [cart, setCart] = useContext(CartContext);
     const [orderCreatedId, setOrderCreatedId] = useState(null);
-
+    const [user, setUser] = useState({});
     const [total, setTotal] = useState(0);
+    const [compraRealizada, setCompraRealizada] = useState(false)
     const vaciarCart = () => {
         setCart([]);
     
@@ -22,6 +25,21 @@ const Cart = () => {
         }
         setTotal(precioInicial);
     }, [cart])
+    useEffect(
+        () =>{
+            const usuarioRegistrado = JSON.parse(localStorage.getItem('registrado'))
+            setTimeout(()=>{
+                    if(usuarioRegistrado){
+                        setUser(usuarioRegistrado);
+                    }else{
+                        setUser();
+                    }
+                },1500) 
+                console.log('usuarioregistrado',user)
+            },
+        []
+        );
+
     // const PrecioCarritoCarrito = () => {
     //     let precioInicial = 0;
     //     for (let i=0; i< cart.length;i++){
@@ -37,7 +55,6 @@ const Cart = () => {
     }, [])
 
     //BTN ENVIAR COMPRA
-    const compraRealizado = false;
 
     const enviarCompra = () => {
         const newItems = cart.map(item=>({
@@ -50,31 +67,33 @@ const Cart = () => {
         }))
         const nuevaOrden = {
             cliente: {
-                nombre: 'matias',
-                telefono: '45442793',
-                email: 'matinico11@hotmail.com'
+                nombre: user.nombre,
+                id: user.id,
+                mail: user.mail
             },
             items: newItems,
             total
         };
         // console.log('Orden:',nuevaOrden);
-        const db = getFirestore();
-        const orders = db.collection('ordenes');
-        const batch = db.batch();
-
-        orders
-            .add(nuevaOrden)
-            .then((response)=>{
-                // console.log("response", response);
-                cart.forEach((item ) => {
-                    const docRef = db.collection("items").doc(item.id);
+        
+        const orders = collection(db, 'ordenes');
+        const docRef = addDoc(orders,nuevaOrden);
+        setCompraRealizada(true);
+        setOrderCreatedId(docRef.id)
+        
+        // orders
+        //     .add(nuevaOrden)
+        //     .then((response)=>{
+        //         // console.log("response", response);
+        //         cart.forEach((item ) => {
+        //             const docRef = db.collection("items").doc(item.id);
                     
-                    batch.update(docRef, { stock: item.stock - item.cantidad });
-                  });
-                  batch.commit();
-                  setOrderCreatedId(response.id);
-                })
-                .catch((error) => console.log(error));  
+        //             batch.update(docRef, { stock: item.stock - item.cantidad });
+        //           });
+        //           batch.commit();
+        //           setOrderCreatedId(response.id);
+        //         })
+        //         .catch((error) => console.log(error));  
                 
                 setCart([]);
 
@@ -88,9 +107,9 @@ const Cart = () => {
             <div>
                 <h3 className='tituloCarrito'>Tu Carrito:</h3>
                 <div className='ContenedorCarrito'>
-                {compraRealizado && <p className='textoCarrito'> Su pedido fue recibido, N° de orden : {orderCreatedId} </p>}
+                {compraRealizada && <p className='textoCarrito'> Su pedido fue recibido, N° de orden : {orderCreatedId} </p>}
                 {cart.length !==0 && <div className='ItemDetalleBtn ItemDetalleBtn--Volver' onClick={()=>vaciarCart()} >Vaciar Carrito</div>}
-                {cart.length===0 && !compraRealizado ? (
+                {cart.length===0 && !compraRealizada ? (
                     <>
                         <p className='textoCarrito'>El Carrito está vacio, presioná el boton para 'ir a colecciones' para ver nuestros productos...</p>
                         <Link to='/categorias/all' className='navLinkContador navLinkContador--Carrito'>
@@ -125,9 +144,18 @@ const Cart = () => {
         fixedDecimalScale={true}
          /></h3>
                     </div>
+                    {user&&(
                     <div className='contenedorBtnCart'>
                         <button onClick={()=>enviarCompra()}>Finalizar Compra</button>
                     </div>
+                    )}
+                    {!user&&(<>
+                        <p>Para finalizar la compra debe iniciar sesion</p>
+                        <Link className='navLinkContador' to={`/Login`}>
+                        <div className='ItemDetalleBtn ItemDetalleBtn--agregar'>iniciar sesion</div>
+                        </Link>                        </>
+                    )
+                    }
                     </>}   
                 </div>
             </div>

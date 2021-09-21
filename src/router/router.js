@@ -6,7 +6,8 @@ import Contacto from '../components/Contacto';
 import NavBar from '../components/NavBar';
 import Cart from '../components/Cart';
 import ItemDetail from '../components/ItemDetail';
-import Longin from '../components/Longin';
+import Registrarse from '../components/Registrarse';
+import Login from '../components/Login';
 
 
 const Router = () => {
@@ -20,8 +21,9 @@ const Router = () => {
                 <Route path='/productos/:cat/:idRut' component={ItemDetail} />
                 <Route path='/contacto' component={Contacto} />
                 <Route path='/cart' component={Cart} />
-                <Route path='/user' component={Longin} />
-
+                <Route path='/Login' component={Login} />
+                <Route path='/Registro' component={Registrarse} />
+                
                 
                 {/* <Route path='*' component={NotFound} /> */}
                 

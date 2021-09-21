@@ -1,8 +1,9 @@
-import React,{useState, useContext} from "react";
+import React,{useState, useContext, useEffect} from "react";
 // import {productos} from '../assets/arrays';
 import {Link} from 'react-router-dom';
 import { CartContext } from "../context/cartContext";
-import { useData } from '../hooks/useData';
+import db from "../firebase";
+import { onSnapshot , collection } from "firebase/firestore";
 
 
 let ArrayCarrito = [];
@@ -15,17 +16,32 @@ let apretado=false;
 
 
 const ItemCount = ({id,stock}) => {
-       
-    // let productoContado = productos.find( producto => producto.id === id);
-    
-    const firebaseArray = useData('items');
-    const arrayItems = firebaseArray.item;
-
-    const itemElegido = arrayItems.find(producto => producto.id === id);
-    console.log(itemElegido);
-
+    const [arrayItems, setArrayItems] = useState([]);
     const [numero, setNumero] = useState(1);
     const [nuevoStock,setNuevoStock]= useState(stock);
+    const [cart, setCart] = useContext(CartContext);
+
+       
+    // let productoContado = productos.find( producto => producto.id === id);
+    const itemElegido = arrayItems.find(producto => producto.id === id);
+    
+    useEffect(
+        () => 
+        onSnapshot(collection(db,'items'),(snapshot)=> {
+            setArrayItems(snapshot.docs.map((doc)=> ({...doc.data(), id: doc.id})));
+        }),
+        []
+    );
+
+    useEffect(
+        ()=> {
+            const enCarrito = cart.find(producto=>producto.id === id);
+            if (enCarrito){
+                setNuevoStock(stock-enCarrito.cantidad);
+            }
+        },[]
+    )
+
 
     const sumarUno = () =>{
             if(numero<nuevoStock){
@@ -46,7 +62,6 @@ const ItemCount = ({id,stock}) => {
             setNumero(1);
         }
     }
-    const [cart, setCart] = useContext(CartContext);
     const repetido = () =>{
         let buscador = cart.find( producto => producto.id === id );
         if(buscador!==undefined){

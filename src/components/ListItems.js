@@ -3,21 +3,16 @@ import Loading from './Loading';
 import '../estilos.css';
 import Item from './Item';
 import { NavLink, useParams } from 'react-router-dom';
-import { useData } from "../hooks/useData";
+import db from "../firebase";
+import { onSnapshot , collection } from "firebase/firestore";
 
 
 
 const ListItems = () => {
-
+  
+    const [array, setArray] = useState([]);
+    const [arrayItems, setArrayItems] = useState([]);
     
-    const firebaseArray = useData('items');
-    const arrayItems = firebaseArray.item;
-    
-    // const arrayCategoria = useData('categorias');
-    // const idCategoria = arrayCategoria.item;
-    
-    const [array, setArray] = useState(arrayItems);
-    // const [url, setUrl] = useState('');    
 
     const [loading, setLoading] = useState(true);
     const {categoriaId} = useParams();
@@ -25,36 +20,32 @@ const ListItems = () => {
 
     const cambiarCategoria = (category) => {
         if( category === 'all'){
-            console.log('array',arrayItems);
             setArray(arrayItems);
         }else{
             setArray(arrayItems.filter(producto => producto.categoriaId === category))
         }
-        // setLoading(true);
     }
 
-    useEffect(() => {
-        setTimeout(()=>{
+
+    
+    useEffect(
+        () => 
+        onSnapshot(collection(db,'items'),(snapshot)=> {
+            setArrayItems(snapshot.docs.map((doc)=> ({...doc.data(), id: doc.id})));
+        }),
+        []
+        );
+        useEffect(() => {
+            setLoading(true);
+        }, [categoriaId])
+        
+        useEffect(() => {
             cambiarCategoria(categoriaId)
-            setLoading(false);
-        },2000)
-    }, [loading])
-
-    useEffect(() => {
-        setLoading(true);
-    }, [categoriaId])
-
-    // useEffect(() => {
-    //     console.log('array',array);
-    //     if( categoriaId === 'all'){
-    //         console.log('array',arrayItems);
-    //         setArray(arrayItems);
-    //     }else{
-    //         setArray(arrayItems.filter(producto => producto.categoriaId === category))
-    //     }
-    // }, [array])
-
-
+            setTimeout(()=>{
+                setLoading(false);
+            },3000)
+        }, [loading])
+ 
     return (
         <div className="contenedorCategorias" key='contenedorCategorias'>
             <div className="listadoCategorias">
@@ -82,7 +73,6 @@ const ListItems = () => {
                         stock={a.stock} 
                         id={a.id} 
                         categoria={a.categoryName}
-                        funcion={()=>console.log(a.id)}
                         key={`item-${a.id}`}></Item>
                     ))
                     }
